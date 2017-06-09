@@ -1,0 +1,3 @@
+#login-with-wp input:not([type="submit"]):not([type="checkbox"]) {
+  width: 100%;
+}
