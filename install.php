@@ -28,6 +28,7 @@ if ( !class_exists( 'WK_UV_Integration_Install' ) )
   	                `consumer_key` varchar(80) NOT NULL,
   	                `secret_key` varchar(80) NOT NULL,
   	                `redirect_uri` varchar(2000) NOT NULL,
+                    `deny_uri` varchar(2000) NOT NULL,
                     `user_id` bigint(20) NOT NULL,
   	                `status` varchar(20) NOT NULL DEFAULT 'publish',
   	                PRIMARY KEY (id)

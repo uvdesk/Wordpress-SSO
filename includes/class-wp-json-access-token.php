@@ -3,40 +3,24 @@
 require LOGIN_WITH_WP_PATH . '/vendor/autoload.php';
 use \Firebase\JWT\JWT;
 
-class WP_JSON_Access_Token {
-	/**
-	 * Server object
-	 */
-	protected $server;
+class SSO_JSON_Access_Token {
 
 	/**
-	 * Constructor
+	 * Register the /wp-json/myplugin/v1/foo route
 	 */
-	public function __construct(WP_JSON_ResponseHandler $server) {
-		$this->server = $server;
-
+	function sso_register_routes() {
+		register_rest_route( 'wc/v1', 'oauth/token', array(
+			'methods'  => WP_REST_Server::CREATABLE,
+			'callback' => array( $this, 'sso_generate_token' ),
+		) );
 	}
 
-	/**
-	 * Register the post-related routes
-	 */
-	public function register_routes( $routes ) {
 
-		$post_routes = array(
-			// Post endpoints
-			'/oauth/token' => array(
-				array( array( $this, 'generate_token' ),      WP_JSON_Server::CREATABLE | WP_JSON_Server::ACCEPT_JSON )
-			)
-		);
-
-		return array_merge( $routes, $post_routes );
-	}
-
-	function generate_token() {
+	function sso_generate_token(WP_REST_Request $request) {
 
 			global $wpdb;
-			$oauth_code = $_POST['oauth_code'];
-			$consumer_key = $_POST['oauth_consumer_key'];
+			$oauth_code = $_POST['auth_code'];
+			$consumer_key = $_POST['auth_consumer_key'];
 			$now = strtotime("now");
 
 			$user_id_data = $wpdb->get_results("SELECT *	FROM {$wpdb->prefix}oauth_codes WHERE auth_code = $oauth_code and oauth_consumer_key = $consumer_key and $now < expire", ARRAY_A );

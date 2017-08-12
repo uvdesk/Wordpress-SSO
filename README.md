@@ -2,6 +2,12 @@
 
 Login with WordPress
 
+Contributors: Webkul, UVdesk
+Requires at least: 3.2
+Tested up to: 4.7
+License: GNU/GPL for more info see license.txt included with plugin
+License URI: http://www.gnu.org/licenseses/gpl-2.0.html
+
 1. **INSTALLATION PROCESS**
 
   * Download Wordpress SSO
@@ -15,5 +21,5 @@ Login with WordPress
   * Login URl - site_url()/uv-login?oauth_consumer_key=xyz
   * Token URl(post request) - site_url()/wp-json/oauth/token
   * Post Data -
-      - oauth_consumer_key
-      - oauth_code
+      - auth_consumer_key
+      - auth_code
