@@ -3,8 +3,8 @@
 Login with WordPress
 
 Contributors: Webkul, UVdesk
-Requires at least: 3.2
-Tested up to: 4.7
+Requires at least: 4.0
+Tested up to: 4.9.2
 License: GNU/GPL for more info see license.txt included with plugin
 License URI: http://www.gnu.org/licenseses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ License URI: http://www.gnu.org/licenseses/gpl-2.0.html
 
   * Login URl - site_url()/uv-login?oauth_consumer_key=xyz
   * Token URl(post request) - site_url()/wp-json/oauth/token
+  * Authorize Client URl(post request) - site_url()/wp-json/check/token
   * Post Data -
       - auth_consumer_key
       - auth_code

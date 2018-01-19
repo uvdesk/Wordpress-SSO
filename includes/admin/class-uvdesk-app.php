@@ -3,8 +3,8 @@
 *	Seller Auction: Product list
 */
 if( !class_exists( 'WP_List_Table' ) ){
-
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+
 
 }
 
@@ -35,7 +35,7 @@ if ( !class_exists( 'WK_Uvdesk_App_List' ) ) {
 
     		$hidden = $this->get_hidden_columns();
 
-    		$this->process_bulk_action();
+				$this->process_bulk_action();
 
     		$data = $this->table_data();
 
@@ -105,9 +105,8 @@ if ( !class_exists( 'WK_Uvdesk_App_List' ) ) {
 		   	return $columns= array (
   		   		'cb'         	=> '<input type="checkbox" />', //Render a checkbox instead of text
           	'app_id'			=> __('Id'),
-            'name'		=> __('Name'),
-            'email'		=> __('E-Mail'),
-						'url'		=> __('Redirect URI'),
+            'name'				=> __('Name'),
+						'url'					=> __('Redirect URI'),
             'deny_url'		=> __('Deny URI')
 		   	);
 
@@ -120,8 +119,6 @@ if ( !class_exists( 'WK_Uvdesk_App_List' ) ) {
       			case 'app_id':
 
       			case 'name':
-
-            case 'email':
 
 						case 'url':
 
@@ -181,8 +178,6 @@ if ( !class_exists( 'WK_Uvdesk_App_List' ) ) {
 
 	    	$name = array();
 
-        $email = array();
-
 				$url = array();
 
     		$deny_url = array();
@@ -195,8 +190,6 @@ if ( !class_exists( 'WK_Uvdesk_App_List' ) ) {
 
 					$name[] = $value['name'];
 
-          $email[] = $value['email'];
-
 					$url[] = $value['redirect_uri'];
 
 					$deny_url[] = $value['deny_uri'];
@@ -205,7 +198,6 @@ if ( !class_exists( 'WK_Uvdesk_App_List' ) ) {
 
 							'app_id'	=> $app_id[$i],
 							'name'	=> $name[$i],
-              'email' => $email[$i],
 							'url' => $url[$i],
 							'deny_url' => $deny_url[$i]
 

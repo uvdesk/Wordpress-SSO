@@ -13,8 +13,43 @@ class SSO_JSON_Access_Token {
 			'methods'  => WP_REST_Server::CREATABLE,
 			'callback' => array( $this, 'sso_generate_token' ),
 		) );
+		register_rest_route( 'wc/v1', 'check/token', array(
+			'methods'  => WP_REST_Server::CREATABLE,
+			'callback' => array( $this, 'sso_oauth_validation_check' ),
+		) );
 	}
 
+	function sso_oauth_validation_check( WP_REST_Request $request ) {
+
+			global $wpdb;
+			$consumer_key  =  $_POST['auth_consumer_key'];
+			$secret_key    =  $_POST['auth_secret_key'];
+
+			$check_response = array();
+
+			$key_assoc_data = $wpdb->get_results( "SELECT * from {$wpdb->prefix}oauth_clients WHERE consumer_key = '$consumer_key'", ARRAY_A );
+
+			if( $key_assoc_data ) {
+
+					if( $key_assoc_data[0]['secret_key'] === $secret_key ) {
+
+						$check_response['success'] = 'true';
+						$check_response['message'] = 'Client verified successfully';
+					}
+					else {
+						$check_response['success'] = 'false';
+						$check_response['message'] = 'Invalid credentials provided';
+					}
+
+			}
+			else{
+
+				$check_response['success'] = 'false';
+				$check_response['message'] = 'Client verified successfully';
+			}
+
+			return json_encode($check_response);
+	}
 
 	function sso_generate_token(WP_REST_Request $request) {
 
@@ -23,7 +58,7 @@ class SSO_JSON_Access_Token {
 			$consumer_key = $_POST['auth_consumer_key'];
 			$now = strtotime("now");
 
-			$user_id_data = $wpdb->get_results("SELECT *	FROM {$wpdb->prefix}oauth_codes WHERE auth_code = $oauth_code and oauth_consumer_key = $consumer_key and $now < expire", ARRAY_A );
+			$user_id_data = $wpdb->get_results("SELECT *	FROM {$wpdb->prefix}oauth_codes WHERE auth_code = $oauth_code and oauth_consumer_key = '$consumer_key' and $now < expire", ARRAY_A );
 
 			if ( $user_id_data ) {
 

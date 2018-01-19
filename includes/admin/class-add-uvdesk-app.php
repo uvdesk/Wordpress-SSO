@@ -29,7 +29,7 @@ if (!class_exists('WK_Add_App'))
 
                 else
                 {
-                    if ( empty($_POST['app_uname']) && empty($_POST['app_email']) && empty($_POST['app_uri']) )
+                    if ( empty($_POST['app_uname']) && empty($_POST['app_uri']) )
                     {
                         ?>
                         <div class="notice notice-error is-dismissible">
@@ -40,7 +40,6 @@ if (!class_exists('WK_Add_App'))
                     else
                     {
                         $name = $_POST['app_uname'];
-                        $email = $_POST['app_email'];
                         $url = $_POST['app_uri'];
                         $deny_url = $_POST['deny_uri'];
                         $consumer_key = WK_TokenGenerator::wk_generateToken();
@@ -48,7 +47,7 @@ if (!class_exists('WK_Add_App'))
 
                         if ( isset( $_GET['app_id'] ) ) {
                             $app_id = $_GET['app_id'];
-                    			  $check_val = $wpdb->update($table_name, array( 'name'=>$name, 'email'=>$email, 'redirect_uri'=>$url, 'deny_uri' => $deny_url), array('id'=>$app_id));
+                    			  $check_val = $wpdb->update($table_name, array( 'name'=>$name, 'redirect_uri'=>$url, 'deny_uri' => $deny_url), array('id'=>$app_id));
                             $last_id = $app_id;
                     		}
 
@@ -56,7 +55,6 @@ if (!class_exists('WK_Add_App'))
 
                             $check_val = $wpdb->insert( $table_name, array(
                 	        			'name' => $name,
-                	        			'email' => $email,
                                 'consumer_key' => $consumer_key,
                                 'secret_key' => $secret_key,
                                 'redirect_uri' => $url,
@@ -89,7 +87,7 @@ if (!class_exists('WK_Add_App'))
             if ( isset( $_GET['app_id'] ) ) {
 
                 $app_id = $_GET['app_id'];
-                $app_data = $wpdb->get_results( "Select name,email,redirect_uri,deny_uri from $table_name where id = $app_id ", ARRAY_A);
+                $app_data = $wpdb->get_results( "Select name,redirect_uri,deny_uri from $table_name where id = $app_id ", ARRAY_A);
 
             }
             ?>
@@ -117,22 +115,12 @@ if (!class_exists('WK_Add_App'))
         							</th>
 
         							<td class="forminp">
-                          <span class="required">* </span><input type="text" id="app_name" name="app_uname" value="<?php if ( isset( $app_data[0]['name'] ) ) echo $app_data[0]['name']; ?>" />
+                          <span class="required">* </span><input type="text" id="app_name" name="app_uname" placeholder="App Name" value="<?php if ( isset( $app_data[0]['name'] ) ) echo $app_data[0]['name']; ?>" />
         							</td>
 
         						</tr>
 
-                    <tr valign="top">
-
-        							<th scope="row" class="titledesc">
-        								  <label for="app_email">Email</label>
-        							</th>
-
-        							<td class="forminp">
-                          <span class="required">* </span><input type="email" id="app_email" name="app_email" value="<?php if ( isset( $app_data[0]['email'] ) ) echo $app_data[0]['email']; ?>" />
-        							</td>
-
-        						</tr>
+                    <tr><td></td><td></td></tr>
 
                     <tr valign="top">
 
@@ -141,11 +129,13 @@ if (!class_exists('WK_Add_App'))
         							</th>
 
         							<td class="forminp">
-                          <span class="required">* </span><input type="text" id="url" name="app_uri" value="<?php if ( isset( $app_data[0]['redirect_uri'] ) ) echo $app_data[0]['redirect_uri']; ?>" />
+                          <span class="required">* </span><input type="text" id="url" name="app_uri" placeholder="Redirect URI" value="<?php if ( isset( $app_data[0]['redirect_uri'] ) ) echo $app_data[0]['redirect_uri']; ?>" />
                           <p class="description">URI user redirect to on allow the access to data.</p>
         							</td>
 
         						</tr>
+
+                    <tr><td></td><td></td></tr>
 
                     <tr valign="top">
 
@@ -154,8 +144,8 @@ if (!class_exists('WK_Add_App'))
         							</th>
 
         							<td class="forminp">
-                          <span class="required">* </span><input type="text" id="deny" name="deny_uri" value="<?php if ( isset( $app_data[0]['deny_uri'] ) ) echo $app_data[0]['deny_uri']; ?>" />
-                          <p class="description">URI user redirect to on deny the access to data.</p>
+                          <input type="text" id="deny" name="deny_uri" placeholder="Reject URI" value="<?php if ( isset( $app_data[0]['deny_uri'] ) ) echo $app_data[0]['deny_uri']; ?>" />
+                          <p class="description">URI user redirect to on deny the access to data (Optional).</p>
         							</td>
 
         						</tr>
@@ -163,15 +153,6 @@ if (!class_exists('WK_Add_App'))
                     <tr><td><hr></td><td><hr></td></tr>
 
                   </tbody>
-
-                  <tfoot>
-
-        						<tr>
-        							<th>Fields</th>
-        							<th>Options</th>
-        						</tr>
-
-        					</tfoot>
 
                 </table>
 

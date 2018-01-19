@@ -5,7 +5,7 @@
 *   Author: Webkul
 *   Author URI: https://webkul.com
 *   Description: Login API for third-party to login using WordPress.
-*   Version: 1.0.0
+*   Version: 1.1.0
 *   Domain Path: plugins/Wordpress-SSO
 */
 ob_start();

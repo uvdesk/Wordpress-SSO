@@ -24,7 +24,6 @@ if ( !class_exists( 'WK_UV_Integration_Install' ) )
   	            $sql = "CREATE TABLE $oauth_clients_table (
   	                `id` bigint(20) NOT NULL AUTO_INCREMENT,
                     `name` varchar(255) NOT NULL,
-                    `email` varchar(255) NOT NULL,
   	                `consumer_key` varchar(80) NOT NULL,
   	                `secret_key` varchar(80) NOT NULL,
   	                `redirect_uri` varchar(2000) NOT NULL,
